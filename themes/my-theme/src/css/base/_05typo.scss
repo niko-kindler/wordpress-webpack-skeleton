@@ -1,0 +1,20 @@
+// TODO: Variable Webfonts checken
+
+@font-face {
+  font-family: 'Roboto slab';
+  src: url('../../fonts/RobotoSlab-Regular.ttf') format('ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Roboto slab', sans-serif;
+}
+
+h1 {
+  font-size: font-size(xlarge);
+}
+
+p {
+  font-size: font-size(regular);
+}

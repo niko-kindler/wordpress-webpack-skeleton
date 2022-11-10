@@ -1,0 +1,42 @@
+/*
+Prefer CSS-Custom Properties as those can be used in Javascript as well.
+*/
+:root {
+  --color-1: #ddd;
+}
+
+/*
+Layout Variables: Maximum size of one grid-column in the content-area of the container
+*/
+$max-size-column: calc(100rem / 6);
+
+/* 
+Font Size dynamic with calc-function - has to be verified in every project
+1rem eq 10px
+*/
+$font-sizes: (
+  'small': calc(1.2rem + 0.25vw),
+  'regular': calc(1.5rem + 0.25vw),
+  'medium': calc(1.5rem + 0.5vw),
+  'large': calc(1.5rem + 2vw),
+  'xlarge': calc(2.5rem + 2vw)
+);
+
+@function font-size($font-size-style) {
+  @return map-get($font-sizes, $font-size-style);
+}
+
+/* 
+Media Queries - übliche Größen, aber für jedes Projekt prüfen
+Mobile First: Die angegebenen Größen entsprechen den jeweiligen Mindestgrößen
+für das Medium
+*/
+$break-points: (
+  'mobile-ls': 480px,
+  'tablet': 800px,
+  'desktop': 1024px
+);
+
+@function breakpoint($break-point-limit) {
+  @return map-get($break-points, $break-point-limit);
+}

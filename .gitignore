@@ -1,0 +1,17 @@
+# Alles ignorieren
+*
+
+# Ausnahmen hinzufügen
+!/*.*
+!/mu-plugins/
+!/mu-plugins/**
+!/themes/
+!/themes/**
+!/extensions/
+!/extensions/**
+
+# Aus whitelisted Themes Ordner wieder rausnehmen
+node_modules/
+
+.DS_Store
+

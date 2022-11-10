@@ -1,0 +1,21 @@
+/*
+* Media Queries: Mobile First Prinzip. 
+*/
+
+@mixin media-mobile-ls {
+  @media screen and (min-width: breakpoint(mobile-ls)) {
+    @content;
+  }
+}
+
+@mixin media-tablet {
+  @media screen and (min-width: breakpoint(tablet)) {
+    @content;
+  }
+}
+
+@mixin media-tablet {
+  @media screen and (min-width: breakpoint(desktop)) {
+    @content;
+  }
+}

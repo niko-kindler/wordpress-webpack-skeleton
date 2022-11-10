@@ -1,0 +1,21 @@
+/*
+Usage: Element can be placed to whole width with 
+"grid-column: container-start / container-end";
+and to content area with
+grid-column: content-start / content-end;
+*/
+
+.container {
+  display: grid;
+  grid-template-columns: 5vw 1fr 5vw;
+
+  @include media-tablet {
+    display: grid;
+    grid-template-columns:
+      [container-start] 1fr [content-start] repeat(
+        6,
+        [col-start] minmax(min-content, $max-size-column) [col-end]
+      )
+      [content-end] 1fr [container-end];
+  }
+}
