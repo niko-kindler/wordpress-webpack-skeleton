@@ -27,9 +27,9 @@ $font-sizes: (
 }
 
 /* 
-Media Queries - übliche Größen, aber für jedes Projekt prüfen
-Mobile First: Die angegebenen Größen entsprechen den jeweiligen Mindestgrößen
-für das Medium
+Media Queries - Common sizes, but check for each project
+Mobile First: The specified sizes correspond to the respective minimum sizes
+for the medium
 */
 $break-points: (
   'mobile-ls': 480px,

@@ -12,6 +12,7 @@ import MyClass from './modules/MyClass.js';
 const myInstance = new MyClass();
 
 /**
+ * Don't delete!
  * Enable Hot Module Reload for Dev
  */
 if (import.meta.webpackHot) {

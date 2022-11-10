@@ -14,7 +14,7 @@
   }
 }
 
-@mixin media-tablet {
+@mixin media-desktop {
   @media screen and (min-width: breakpoint(desktop)) {
     @content;
   }
