@@ -1,4 +1,4 @@
-# A skeleton for a Wordpress theme 
+# A skeleton for a Wordpress theme with Webpack
 This is a Skeleton Wordpress Theme with webpack, Hot Module Reload for JS and SCSS Files, auto reload for PHP-Files, which makes developing Wordpress themes really simple and fun!
 
 # Installation
