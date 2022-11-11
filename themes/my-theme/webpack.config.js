@@ -20,10 +20,17 @@ class RunAfterCompile {
         const vendorsRegEx = new RegExp("/dist/vendors.+?'", 'g');
         const cssRegEx = new RegExp("/dist/styles.+?'", 'g');
 
-        let result = data
-          .replace(scriptsRegEx, `/dist/${manifest['index.js']}'`)
-          .replace(vendorsRegEx, `/dist/${manifest['vendors.js']}'`)
-          .replace(cssRegEx, `/dist/${manifest['index.css']}'`);
+        let result = data;
+
+        result = manifest['index.js']
+          ? result.replace(scriptsRegEx, `/dist/${manifest['index.js']}'`)
+          : result;
+        result = manifest['vendors.js']
+          ? result.replace(vendorsRegEx, `/dist/${manifest['vendors.js']}'`)
+          : result;
+        result = manifest['index.css']
+          ? result.replace(cssRegEx, `/dist/${manifest['index.css']}'`)
+          : result;
 
         fse.writeFile('./functions.php', result, 'utf8', function (err) {
           if (err) return console.log(err);

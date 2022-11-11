@@ -6,8 +6,8 @@ grid-column: content-start / content-end;
 */
 
 .container {
-  display: grid;
-  grid-template-columns: 5vw 1fr 5vw;
+  display: block;
+  margin: 0 2vw;
 
   @include media-tablet {
     display: grid;
