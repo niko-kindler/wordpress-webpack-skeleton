@@ -1,0 +1,45 @@
+.uber-uns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.uber-uns__quote {
+    font-size: 5em;
+    font-family: 'Script';
+    font-weight: bold;
+    margin-bottom: -50px;
+
+    @include media-tablet {
+        margin-bottom: -200px;
+    }
+}
+
+.uber-uns__grusswort {
+    margin-left: 10px;
+    font-size: font-size(medium);
+    width: 55%;
+    
+    @include media-tablet {
+        margin-left: 50px;
+    }
+}
+
+.uber-uns__bild {
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+    background-position: center center;
+    object-fit: cover;
+    background-repeat: none;
+    background-size: contain;
+    margin: 5px;
+    background-image: linear-gradient(45deg,var(--main-color),var(--contrast));
+
+    @include media-tablet {
+        width: 400px;
+        height: 385px;
+        border-radius: 400px;
+        margin: 15px;
+    }
+}

@@ -1,0 +1,61 @@
+input[type=text]:focus, input[type=date]:focus, input[type=tel]:focus, textarea:focus {
+    border: 2px;
+    background-color: var(--main-color-light);
+}
+
+textarea:focus {
+    height: 300px;
+}
+
+input[type=submit] {
+    background-color: var(--main-color);
+    color: var(--white);
+    font-size: font-size(regular);
+    font-weight: 500;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 15px; 
+    transition: background-color 0.5s;
+    transition: color 0.5s;
+    text-decoration: none;
+    border: 0;    
+}
+
+label {
+    display: block;
+    margin: 5px 0;
+    font-weight: 200;
+}
+
+.form-select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.form-inputs {
+    display: none;
+}
+
+.form-message {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.form__btn-submit:hover {
+    background-color: var(--main-color-light);
+    color: var(--main-color);
+}

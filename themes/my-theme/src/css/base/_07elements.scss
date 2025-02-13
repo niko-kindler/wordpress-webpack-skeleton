@@ -1,0 +1,47 @@
+// Buttons
+
+a.btn {
+    background-color: var(--main-color);
+    color: var(--white);
+    font-size: font-size(regular);
+    font-weight: 500;
+    padding: 10px;
+    margin: 15px;
+    line-height: 3em;
+    border-radius: 15px; 
+    transition: background-color 0.5s;
+    transition: color 0.5s;
+}
+
+a.btn:hover {
+    background-color: var(--white);
+    color: var(--main-color);
+}
+
+// Headings
+
+.fullsize-heading {
+    grid-column: container-start / container-end;
+    background-color: var(--main-color);
+    color: var(--white);
+    padding: 20px;
+}
+
+// Spacer
+
+.spacer-40 {
+    width: 100%;
+    height: 40px;
+}
+
+.spacer-80 {
+    width: 100%;
+    height: 80px;
+}
+
+// Margins
+
+.margin {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}

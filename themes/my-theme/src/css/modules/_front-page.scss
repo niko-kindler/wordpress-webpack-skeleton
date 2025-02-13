@@ -1,0 +1,15 @@
+.intro {
+    margin-top: 0.6vh;
+    margin-bottom: 0.6vh;
+    text-align: center;
+    grid-column: container-start / container-end;
+}
+
+.text {
+    grid-column: content-start / content-end;
+    margin: 0 2vw;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+

@@ -1,12 +1,23 @@
-<?php get_header();
+<?php 
+get_header(); 
 
-while (have_posts()) {
-    the_post(); ?>
+$image = get_the_post_thumbnail_url();
 
-<h1><?php the_title(); ?></h1>
-<h2>Hello from page.php</h2>
-<p><?php the_content(); ?></p>
+if($image) {
+?>
 
-<?php  get_footer();
+<div class="hero-small" style="background-image: url('<?php echo $image; ?>');"></div>
+
+<?php
 }
 ?>
+
+<h1><?php the_title(); ?></h1>
+
+<div class="container">
+    <div class="text"><?php the_content(); ?></div>
+</div>
+
+<div class="spacer-80"></div>
+
+<?php get_footer(); ?>

@@ -1,0 +1,157 @@
+header {
+    background-color: var(--white);
+    box-shadow: 1px 1px 5px 0px var(--grey);
+    position: sticky;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+
+    @include media-tablet {
+        display: flex;
+    }
+}
+
+.logo {
+    display: inline-block;
+    color: var(--grey);
+    margin: 2vw 2vh;
+
+    @include media-tablet {
+        margin: 1vw 2vh;
+    }
+    @include media-desktop {
+        margin-left: 10%;
+    }
+}
+
+.logo-img {
+    max-width: 50vw;
+    max-height: 8vh;
+}
+
+// Menu
+
+nav ul {
+    list-style: none;
+}
+
+
+.nav {
+    position: absolute;
+    background-color: var(--contrast);
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height .5s ease-out;
+    font-family: Roboto, sans-serif;
+    font-size: 2em;
+
+    @include media-tablet {
+        max-height: none;
+        font-size: font-size(regular);
+        top: 0;
+        position: relative;
+        float: right;
+        width: fit-content;
+        background-color: transparent;
+        vertical-align: middle;
+    }
+    
+    @include media-desktop {
+        margin-right: 10%;
+    }
+}
+
+
+.menu a {
+    display: block;
+    padding: 30px;
+    color: var(--white);
+
+    @include media-tablet {
+        color: var(--contrast);
+    }
+}
+
+.menu a:hover {
+    background-color: var(--contrast-lighter);
+
+    @include media-tablet {
+        background-color: transparent;
+        color: var(--contrast);
+    }
+
+}
+
+.menu li {
+    @include media-tablet {
+        float: left;
+    }
+}
+
+// Burger Menu Icon
+
+.hamb {
+    cursor: pointer;
+    margin-right: 3vw;
+    margin-top: 1%;
+    padding: 30px;
+    float: right;
+
+    @include media-tablet {
+        display: none;
+    }
+}
+
+.hamb-line {
+    background: var(--contrast);
+    display: block;
+    height: 2px;
+    position: relative;
+    width: 24px;
+}
+
+.hamb-line::before,
+.hamb-line::after{
+    background: var(--contrast);
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+
+.hamb-line::before {
+    top: 5px;
+}
+
+.hamb-line::after {
+    top: -5px;
+}
+
+.side-menu {
+    display: none;
+}
+
+// Menu Toggle
+
+.side-menu:checked ~ nav {
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+.side-menu:checked ~ .hamb .hamb-line {
+    background: transparent;
+}
+
+.side-menu:checked ~ .hamb .hamb-line::before {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
+.side-menu:checked ~ .hamb .hamb-line::after {
+    transform: rotate(45deg);
+    top: 0;
+}

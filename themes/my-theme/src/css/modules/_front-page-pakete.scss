@@ -1,0 +1,46 @@
+.pakete{
+    grid-column: container-start / container-end;
+    flex-wrap: wrap;
+
+    @include media-tablet {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+.paketeCard{
+    background-position: center;
+    background-size: cover;
+    background-repeat: none;
+    margin: 1vh 1vw;
+    min-height: 33vh;
+
+    @include media-tablet {
+        flex-grow: 0;
+        flex-shrink: 1;
+        flex-basis: 31%;
+        margin: 1%;
+    }
+}
+
+.paketUberschrift{
+    font-weight: 800;
+    padding-top: 0.5em;
+    font-size: 1.5em;
+    background-image: linear-gradient(45deg, var(--main-color), var(--contrast));
+    padding-bottom: 1vh;
+    color: var(--text-light);
+    text-align: center;
+}
+
+.paketeInhalt{
+    font-family: Roboto;
+    padding-bottom: 1vh;
+    margin-top: 2vh;
+}
+
+.paketePreis{
+    padding-bottom: 1vh;
+    font-weight: 800;
+    font-size: 1.2em;
+}

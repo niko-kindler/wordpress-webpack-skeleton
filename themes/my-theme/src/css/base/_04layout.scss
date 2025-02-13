@@ -7,10 +7,12 @@ grid-column: content-start / content-end;
 
 .container {
   display: block;
-  margin: 0 2vw;
+  margin: 0 0;
+  max-width: 100%;
 
   @include media-tablet {
     display: grid;
+    margin: 0 0;
     grid-template-columns:
       [container-start] 1fr [content-start] repeat(
         6,

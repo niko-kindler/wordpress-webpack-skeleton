@@ -1,1 +1,1 @@
-console.log('Hello from my-module.js');
+import lodash from "lodash";

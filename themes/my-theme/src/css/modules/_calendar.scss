@@ -1,0 +1,35 @@
+.calendar {
+    grid-column: content-start / content-end;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; 
+    @include media-tablet {
+        flex-direction: row;
+        flex-wrap: nowrap; 
+    }    
+}
+
+.va_tag {
+    width: 100%;
+    @include media-tablet {
+        width: 20%;
+    }
+    gap: 5%;
+}
+
+.va_tag__card-thumbnail-calendar {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    height: 100vw;
+    @include media-tablet {
+        max-height: 20vh;
+    }
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top center;
+    transform: translateY(-25px);
+    @include media-tablet {
+        transform: translateY(0);
+    }
+}

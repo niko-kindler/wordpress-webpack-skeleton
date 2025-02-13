@@ -1,21 +1,110 @@
-// TODO: Variable Webfonts checken
+/* AlegreyaSansSC- */
+
+@font-face {
+  font-family: 'Alegreya Sans SC';
+  src: url('../../fonts/AlegreyaSansSC/AlegreyaSansSC-Regular.ttf'), format('ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans SC';
+  src: url('../../fonts/AlegreyaSansSC/AlegreyaSansSC-Medium.ttf'), format('ttf');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans SC';
+  src: url('../../fonts/AlegreyaSansSC/AlegreyaSansSC-Light.ttf'), format('ttf');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans SC';
+  src: url('../../fonts/AlegreyaSansSC/AlegreyaSansSC-Thin.ttf'), format('ttf');
+  font-weight: 100;
+  font-style: normal;
+}
+
+/* Delius Regular */
+@font-face {
+  font-family: 'Delius Regular';
+  src: url('../../fonts/Delius/Delius-Regular.ttf'), format('ttf');
+  font-weight: 100;
+  font-style: normal;
+}
+
+/* Annie Use Your Telescope */
+@font-face {
+  font-family: 'Annie Use Your Telescope';
+  src: url('../../fonts/Annie_Use_Your_Telescope/AnnieUseYourTelescope-Regular.ttf'), format('ttf');
+  font-weight: 100;
+  font-style: normal;
+}
+
+
+/* Roboto Slab */
 
 @font-face {
   font-family: 'Roboto slab';
-  src: local('Roboto slab'),
-    url('../../fonts/RobotoSlab-Regular.ttf') format('truetype');
-  font-weight: normal;
+  src: url('../../fonts/RobotoSlab/RobotoSlab-Regular.ttf'), format('ttf');
+  font-weight: 400;
   font-style: normal;
 }
 
 body {
-  font-family: 'Roboto slab', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-size: font-size(regular);
+  color: var(--text-dark);
+  -webkit-font-smoothing: auto;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Delius Regular';
+  text-align: center;
+  color: var(--main-color);
+  padding: 0.5em 0;
 }
 
 h1 {
   font-size: font-size(xlarge);
+  font-weight: 400;
 }
 
-p {
+h2{
+  font-size: font-size(large);
+  font-weight: 400;
+}
+
+h3 {
+  font-size: font-size(medium);
+  font-weight: 300;
+}
+
+h4 {
   font-size: font-size(regular);
+  font-weight: 200;
+}
+
+h5 {
+  font-size: font-size(small);
+  font-weight: 200;
+}
+
+p, ul, li, span {
+  font-size: font-size(regular);
+  font-weight: 200;
+  margin-bottom: 0.5em;
+  line-height: 140%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.center {
+  text-align: center;
 }

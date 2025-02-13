@@ -2,3 +2,27 @@
 Here things come in, like center-text, default margins, etc., 
 which one could need on diverse elements you might need
 */
+
+.headline {
+    grid-column: container-start / container-end;
+    background-color: lavender;
+    text-align: center;
+}
+
+.left {
+    grid-column: content-start / 5;
+}
+
+.right {
+    grid-column: 5 / content-end;
+}
+
+.davor {
+    grid-column: container-start / 4;
+    background-color: orangered;
+}
+
+.test123 {
+    grid-column: 6 / container-end;
+    background-color: rosybrown;
+}

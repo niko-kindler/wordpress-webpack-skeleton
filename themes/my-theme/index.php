@@ -2,7 +2,7 @@
 
 <h1><?php the_title(); ?></h1>
 <h3>This is index.php</h3>
-<p><?php the_content(); ?></p>
 
+<p><?php the_content(); ?></p>
 
 <?php get_footer(); ?>

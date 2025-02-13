@@ -1,0 +1,59 @@
+.cards {
+    grid-column: container-start / container-end;
+    flex-wrap: wrap;
+    @include media-tablet {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.card { 
+    background-position: center;
+    background-size: cover;
+    background-repeat: none;
+    margin: 1vh 0;
+    min-height: 33vh;
+
+    @include media-tablet {
+        flex-grow: 0;
+        flex-shrink: 1;
+        flex-basis: 31%;
+        margin: 1%;
+    }
+}
+
+.cardOverlay {
+    background-color: rgb(0,0,0,0.25);
+    transition: background-color 0.5s;
+    display: block;
+    min-height: 33vh;
+    position: relative;
+}
+
+.cardOverlay:hover {
+    background-color: rgb(0,0,0,0);
+}
+
+.cardTitle, .cardLand {
+    color: var(--white);
+    text-align: left;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.cardTitle {
+    min-height: 1.5em;
+    font-weight: bold;
+}
+
+.cardLand {
+    width: 100%;
+}
+
+.cardButton a {
+    float: right;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+ }

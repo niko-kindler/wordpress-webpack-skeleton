@@ -2,7 +2,15 @@
 Prefer CSS-Custom Properties as those can be used in Javascript as well.
 */
 :root {
-  --color-1: #ddd;
+  --white: #ffffff;
+  --main-color: #e6534a;
+  --contrast: #085573;
+  --contrast-lighter: #E5C9B0;
+  --main-color-light: #E6AEAF;
+  --grey: #d0d0d0;
+  --text-dark:#000000;
+  --text-light: #ffffff;
+  --color-links: #ff0000;
 }
 
 /*
@@ -18,7 +26,7 @@ $font-sizes: (
   'small': calc(1.2rem + 0.25vw),
   'regular': calc(1.5rem + 0.25vw),
   'medium': calc(1.5rem + 0.5vw),
-  'large': calc(1.5rem + 2vw),
+  'large': calc(1.5rem + 1vw),
   'xlarge': calc(2.5rem + 2vw)
 );
 
