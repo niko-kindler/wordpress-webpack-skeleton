@@ -2,34 +2,65 @@
     grid-column: content-start / content-end;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     @include media-tablet {
         flex-direction: row;
-        flex-wrap: nowrap; 
+        flex-wrap: nowrap;
     }    
 }
 
 .va_tag {
     width: 100%;
-    @include media-tablet {
-        width: 20%;
-    }
+    margin: 0 auto;
     gap: 5%;
 }
 
-.va_tag__card-thumbnail-calendar {
-    display: block;
+.filter {
     width: 100%;
-    margin-top: 20px;
-    height: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     @include media-tablet {
-        max-height: 20vh;
-    }
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: top center;
-    transform: translateY(-25px);
-    @include media-tablet {
-        transform: translateY(0);
-    }
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 50px;
+    }    
+}
+
+.filter .dashicons {
+    font-size: 2em;
+}
+
+.filter li {
+    list-style-type: none;
+    font-weight: 400;
+}
+
+.filter a {
+    color: var(--main-color);
+}
+
+.filter a:hover {
+    color: var(--main-colo-light);
+}
+
+.filter a.active {
+    color: white;
+    background-color: var(--main-color); /* Hauptfarbe wird durch Shadow ersetzt */
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 20px 38px 34px -26px hsla(0, 100%, 50%, 0.2);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+.filter a.active:hover {
+    color: white;
+    background-color: var(--main-color-light); /* Hauptfarbe wird durch Shadow ersetzt */
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 15px;
+    box-shadow: 20px 38px 34px -26px hsla(0, 100%, 50%, 0.2);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 }

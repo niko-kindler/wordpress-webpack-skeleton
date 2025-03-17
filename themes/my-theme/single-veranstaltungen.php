@@ -1,65 +1,30 @@
-<?php get_header();
-
-while (have_posts()) {
-    the_post(); 
+<?php 
+get_header(); 
 
 $image = get_the_post_thumbnail_url();
-
-if($image) {
-
 ?>
 
-<div class="hero-small" style="background-image: url('<?php echo $image; ?>');"></div>
-
-<div class="container margin">
-    <h1 class="fullsize-heading">Familienzentrum Villa Lützow</h1>
-</div>
+<h1><?php the_title(); ?></h1>
 
 <div class="container">
-  <div class="text">
-    <p>Willkommen im Familienzentrum Villa Lützow. Hier findest du die Veranstaltungen, die heute stattfinden:</p>
-  </div>
-</div>
-
-<?php
-}
-?>
-
-<?php
-// Deutschen Tag ausgeben
-$day = date("D");
-
-$tag_mapping = array(
-  'Mon' => 'Montag',
-  'Tue' => 'Dienstag',
-  'Wed' => 'Mittwoch',
-  'Thu' => 'Donnerstag',
-  'Fri' => 'Freitag',
-  'Sat' => 'Montag',
-  'Sun' => 'Sonntag'
-);
-
-$tag = isset($tag_mapping[$day]) ? $tag_mapping[$day] : 'Montag';
-
-// Set the $tag variable for the template part
-set_query_var('tag', $tag);
-get_template_part('template-parts/content', 'va_tag');
-
-?>
-
-<p class="center"><a href="/programm/" class="btn">Gesamtprogramm</a></p>
-
-<div class="spacer-20"></div>
-
-<div class="container">
-  <div class="text">
+    <div class="text">
+        <?php if ($image) { echo "<img src=\"". $image ."\" width=\"100%\" />"; } ?>
+        <p>&nbsp;</p>
         <?php the_content(); ?>
-  </div>
+        <p>&nbsp;</p>
+        <h3>Anmeldeinformationen</h3>
+        <?php echo the_field('anmeldeinformationen'); ?>
+    </div>
 </div>
 
-<div class="spacer-40"></div>
+<div class="spacer-80"></div>
 
 <?php
+
+$trigger_contact = get_field('kontaktformular_anzeigen');
+
+if ($trigger_contact == "ja") {
+    
 //Kontaktformular
 
 $form_versendet = false;
@@ -69,6 +34,7 @@ if(isset($_POST['name'])){
   $form_versendet = true;
 
   $name = (isset($_POST['name']))? sanitize_text_field($_POST['name']) : '';
+  $veranstaltung = (isset($_POST['veranstaltung']))? sanitize_text_field($_POST['veranstaltung']) : '';
   $email = (isset($_POST['email']))? sanitize_text_field($_POST['email']) : '';
   $telefon = (isset($_POST['telefon']))? sanitize_text_field($_POST['telefon']) : '';
   $nachricht = (isset($_POST['nachricht']))? sanitize_text_field($_POST['nachricht']) : '';
@@ -76,32 +42,34 @@ if(isset($_POST['name'])){
 
   if (!$telefax) {
 
+  $site_name = get_option('blogname');
   $empfaenger = get_option('admin_email');
-  $betreff = "[".get_current_site_name()."] Nachricht von ". $name;
+  $betreff = "[".$site_name."] Nachricht von ". $name;
   
   $header  = "MIME-Version: 1.0\r\n";
   $header .= "Content-type: text/html; charset=utf-8\r\n";
-  $header .= "From: ".get_current_site_name()." <info@mikro-webseite.de>";
+  $header .= "From: ".$site_name." <wordpress@familienzentrum-villaluetzow.de>";
 
-  $text = "Nachricht auf Mikro-Webseite.de: Neue Nachricht auf Mikro-Webseite.de\r\n";
+  $text = "Nachricht auf ".$site_name.": Neue Nachricht\r\n";
   $text .= "Name: ". $name ."<br>\r\n";
   $text .= "E-Mail: ". $email ."<br>\r\n";
   $text .= "Telefon: ". $telefon ."<br>\r\n";
-  $text .= "Reise: ". $reise ."<br>\r\n";
-  $text .= "Anreise / Abreise: ". $anreise ."\r\n";
+  if($veranstaltung) {
+    $post_content .= "Veranstaltung: $veranstaltung\n";
+  }
   $text .= "Zusätzliche Informationen: ". $nachricht ."\r\n";
-
+  
   mail($empfaenger,$betreff,$text,$header);
   
   $post_content = "Name: $name\n";
   $post_content .= "Email: $email\n";
   $post_content .= "Telefon: $telefon\n";
   $post_content .= "Anreise: $anreise\n";
-  $post_content .= "Nachricht: $nachricht\n";
-  if($reise) {
-    $post_content .= "Reise: $reise\n";
+  if($veranstaltung) {
+    $post_content .= "Veranstaltung: $veranstaltung\n";
   }
-
+  $post_content .= "Nachricht: $nachricht\n";
+  
   $post_id = wp_insert_post(array(
     'post_title'    => $name, 
     'post_content'  => $post_content,
@@ -114,23 +82,11 @@ if(isset($_POST['name'])){
 
 ?>
 
-<div class="container margin">
-    <h2 class="fullsize-heading"><a name="kontaktformular"></a>Kontakt aufnehmen</h2>
-</div>
-
 <div class="container">
      
     <div class="text">
 
-    <p class="spacer-20"></p>
-
-    <p>Wir freuen uns auf Ihre Nachricht!</p>
-
-    <p>Wir beantworten unsere Anfragen an Werktagen innerhalb von 48h. Bei dringenden Anfragen kontaktieren Sie uns bitte per WhatsApp oder Chat.</p>
-
-    <p class="spacer-40"></p>
-
-    <h2>Kontaktformular</h2>
+    <h3>Schreib uns eine Nachricht</h3>
  
     <?php
 
@@ -145,8 +101,9 @@ if(isset($_POST['name'])){
     ?>
     
     <form id="kontakt" method="POST" action="">
-
-       <input class="form-input" type="text" name="name" id="name" placeholder="Ihr Name" required>
+    
+    <input class="form-input" type="text" name="veranstaltung" id="veranstaltung" value="<?php echo the_title(); ?>">
+    <input class="form-input" type="text" name="name" id="name" placeholder="Ihr Name" required>
     <input class="form-input" type="text" name="email" id="email" placeholder="Ihre E-Mail-Adresse" required>
     <input class="form-input" type="text" name="telefon" id="telefon" placeholder="Ihre Telefonnummer">
     <input class="form-inputs" type="text" name="telefax" id="telefax" placeholder="Ihre Faxnummer">
@@ -166,27 +123,12 @@ if(isset($_POST['name'])){
     </div>
 </div>
 
-<div class="spacer-80"></div>
-
-<div class="container margin">
-    <h2 class="fullsize-heading"><?php echo get_field('copy_uberschrift'); ?>
-</h2>
-</div>
-
-<div class="container margin">
-    <div class="text">
-        
-        <?php echo get_field('copy'); ?>
-    </div>
-</div>
-
-
 <?php
+
 }
 
 ?>
 
+<div class="spacer-80"></div>
 
-<?php
-
-get_footer(); ?>
+<?php get_footer(); ?>

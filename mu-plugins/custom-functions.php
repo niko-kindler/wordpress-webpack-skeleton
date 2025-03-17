@@ -8,6 +8,7 @@ Version: 1.1
 function my_scripts() {
 	wp_enqueue_script( 'google-maps_js', '/wp-content/mu-plugins/js/google-maps.js', array('jquery'), microtime(), true );
 	wp_enqueue_style( 'acf-map', '/wp-content/mu-plugins/css/acf-map.css');
+	wp_enqueue_style( 'dashicons' ); 
   }
   
 add_action( 'wp_enqueue_scripts', 'my_scripts' );

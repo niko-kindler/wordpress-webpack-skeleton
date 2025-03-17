@@ -155,3 +155,37 @@ nav ul {
     transform: rotate(45deg);
     top: 0;
 }
+
+.infobar {
+    width: 100%;
+    background-color: var(--main-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+    gap: 5px;
+    flex-direction:column;
+
+    @include media-tablet {
+        flex-direction: row;
+        gap: 50px;
+    }
+
+}
+
+.infobar a {
+    color: white;
+    font-weight: bold;
+}
+
+.contactinfo {
+    font-family: 'Delius Regular';
+}
+
+.call-button, .mail-button {
+    display: inline-block;
+    font-size: 1em; 
+    background-color: var(--white);
+    color: var(--main-color);
+    border-radius: 5px;
+}
