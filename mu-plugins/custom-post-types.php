@@ -179,5 +179,3 @@ function sortable_veranstaltungen_columns($columns) {
     return $columns;
 }
 add_filter('manage_edit-veranstaltungen_sortable_columns', 'sortable_veranstaltungen_columns');
-
-?>

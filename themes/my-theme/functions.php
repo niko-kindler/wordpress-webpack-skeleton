@@ -15,9 +15,9 @@ function my_theme_scripts_and_styles()
     if (strstr($_SERVER['SERVER_NAME'], 'kidz-ev.local')) {
         wp_enqueue_script('main-js', 'http://localhost:3000/bundle.js', null, null, true);
     } else {
-        wp_enqueue_script('vendors-js', get_theme_file_uri('/dist/index.2e9fcac56910c218ab14.js'), null, '1.0', true);
+        wp_enqueue_script('vendors-js', get_theme_file_uri('/dist/index.e2388769dcdc8d4e99bd.js'), null, '1.0', true);
         wp_enqueue_script('main-js', get_theme_file_uri('/dist/vendors.a555a53aa0c985b96c00.js'), null, '1.0', true);
-        wp_enqueue_style('our-main-styles', get_theme_file_uri('/dist/styles.2e9fcac56910c218ab14.css'));
+        wp_enqueue_style('our-main-styles', get_theme_file_uri('/dist/styles.e2388769dcdc8d4e99bd.css'));
     }
 }
 

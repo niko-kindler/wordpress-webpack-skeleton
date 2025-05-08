@@ -174,5 +174,3 @@ function my_acf_google_map_api( $apiKey_google ){
 }
 
 add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
-
-?>

@@ -5,6 +5,18 @@ footer {
     color: white;
 }
 
+footer a {
+    color: white;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer span {
+    margin-right: 5px;
+}
+
 .footer-primary {
     text-align: center;
 

@@ -19,5 +19,5 @@
 
 <div class="infobar">
     <p><a href="tel:03025733816"><span class="dashicons call-button dashicons-phone"></span> <span class="contactinfo">030 - 25 73 38 16</span></a></p>
-    <p><a href="mailto:info@familienzentrum-villaluetzow.de"><span class="dashicons mail-button dashicons-email"></span> <span class="contactinfo">info@familienzentrum-villaluetzow.de</span></a></p>
+    <p><a href="mailto:kidz@familienzentrum-villaluetzow.de"><span class="dashicons mail-button dashicons-email"></span> <span class="contactinfo">kidz@familienzentrum-villaluetzow.de</span></a></p>
 </div>

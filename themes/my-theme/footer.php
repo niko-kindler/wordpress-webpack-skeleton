@@ -4,9 +4,9 @@
 <div class="container">
   <div class="footer-primary">
       <p class="footer-headline">Kidz e.V.</p>
-      <p class="footer-text">Lützowstr. 28, 10785 Berlin<br />
-      kidz@familienzentrum-villaluetzow<br />
-      <a href="tel:+43025733816">030-25733816</a>
+      <p class="footer-text"><span class="dashicons dashicons-location"></span><a href="https://maps.app.goo.gl/SG7f5PQprzKpDjQ17">Lützowstr. 28, 10785 Berlin</a><br />
+      <span class="dashicons dashicons-email"></span><a href="mailto:kidz@familienzentrum-villaluetzow.de">kidz@familienzentrum-villaluetzow.de</a><br />
+      <span class="dashicons dashicons-phone"></span><a href="tel:+43025733816">030-25733816</a>
       </p>
     </div>
 

@@ -12,9 +12,21 @@
           if(isset($args['kategorie'])) {
             $kategorie = $args['kategorie'];
           }
+          if (isset($kategorie)){
+            if ($kategorie == "Gesamtprogramm") {
+              unset($kategorie);
+          }}
         ?>
 
         <?php
+        // Objekt mit Feiertagen holen
+
+        $feiertage_json = get_field('feiertage', 55);
+        
+        if($feiertage_json != "") {
+          $feiertage = json_decode($feiertage_json, true);
+        }
+
         // WP-Query für alle VA am Tag $tag
         $args = array(
           'post_type'      => 'veranstaltungen',
@@ -44,9 +56,54 @@
           while ($veranstaltungen_query->have_posts()) : $veranstaltungen_query->the_post();
           
           $mode_message = "";
+
+          // Findet statt?
+          $findet_nicht_statt = get_field('findet_nicht_statt');
+          $ferienmodus = get_field('ferienmodus',55);
+          $strike = "";
+          $strike_end = "";
+          $begruendung = "";
+          $black_white = "";
+
+          // ACF-Felder
+          $uhrzeit_von = get_field('uhrzeit_von');
+          $uhrzeit_bis = get_field('uhrzeit_bis');
+          $veranstaltungsarten = get_field('veranstaltungsart');
+
+          // Wenn einzelner Termin nicht stattfinden kann
+          if ($findet_nicht_statt == true) {
+            $strike = "<span style=\"text-decoration: line-through;\">";
+            $strike_end = "</span>";
+            $begruendung = "<span style=\"color: red; font-weight: bold;\">". get_field('findet_nicht_statt_weil') . "</span>";
+            $black_white = " filter: grayscale(100%);";
+          }
+
+          // Wenn Ferienprogramm
+          
+          if ($ferienmodus == "ein") {
+            $findet_in_ferien_statt = "";
+            if(is_array($veranstaltungsarten)) {
+
+              foreach ($veranstaltungsarten as $veranstaltungsart) {
+                if ($veranstaltungsart->term_id == 25) {
+                  $findet_in_ferien_statt = "JA";
+                }
+              }
+
+              if($findet_in_ferien_statt != "JA") {
+                $strike = "<span style=\"text-decoration: line-through;\">";
+                $strike_end = "</span>";
+                $begruendung = "<span style=\"color: red; font-weight: bold;\">Findet nicht in den Ferien statt!</span>";
+                $black_white = " filter: grayscale(100%);";
+              }
+            } 
+            
+          }
           
           // Wenn nicht jede Woche, zeige Rhythmus und nächste Daten:
           $modus = get_field('modus')[0];
+
+          $va_tag = get_field('wochentag');
           
           $start_date = get_field('erstes_va_datum');
           
@@ -56,9 +113,9 @@
           
             if ($modus == 'once') {
               if ($start < $today) {
-                echo "Einmalig, Termin am " . $start->format('d.m.') . " (bereits vorbei)";
+                $mode_message = "Einmalig, Termin am " . $start->format('d.m.') . " (bereits vorbei)";
               } else {
-                echo "Einmalig, Termin am " . $start->format('d.m.');
+                $mode_message = "Einmalig, Termin am " . $start->format('d.m.');
               }
             } else {
               switch ($modus) {
@@ -75,7 +132,7 @@
                   $text = "monatlich";
                   break;
                 case '24':
-                  $text = "jeden 2. und 4. Donnerstag";
+                  $text = "jeden 2. und 4. Donnerstag im Monat";
                   
                   function getNthThursday($year, $month, $nth) {
                       $date = new DateTime("first day of $year-$month");
@@ -102,8 +159,8 @@
                       $next_year = ($current_month == 12) ? $current_year + 1 : $current_year;
                       $next_date = getNthThursday($next_year, $next_month, 2);
                   }
-              
-                  $mode_message = "<span class=\"va_tag__content-next\">" . $text . ", nächster Termin am <strong>" . $next_date->format('d.m.') . "</strong></span>";
+                  $interval = false;
+                  $mode_message = "<span class=\"va_tag__content-next\">" . $text . ", nächster Termin am <strong>" . $strike ."". $va_tag ." ".  $next_date->format('d.m.') ."". $strike_end ." ". $begruendung . "</strong></span>";
                   break;
                   case 'interval':
                     $text = "nur von Oktober bis März";
@@ -125,7 +182,7 @@
                         $next_date = new DateTime("first day of October $next_year");
                     }
                 
-                    $mode_message = "<span class=\"va_tag__content-next\">" . $text . ", nächster Termin am <strong>" . $next_date->format('d.m.') . "</strong></span>";
+                    $mode_message = "<span class=\"va_tag__content-next\">" . $text . ", nächster Termin am <strong>" . $strike ."". $va_tag ." ". $next_date->format('d.m.') ."". $strike_end ." ". $begruendung . "</strong></span>";
                 break;
                 default:
                   $interval = null;
@@ -139,15 +196,10 @@
                   $start->add($interval);
                 }
           
-                $mode_message = "<span class=\"va_tag__content-next\">" . $text . ", nächster Termin am <strong>" . $start->format('d.m.') . "</strong></span>";
+                $mode_message = "<span class=\"va_tag__content-next\">" . $text . ", nächster Termin am <strong>" . $strike ."". $va_tag .", ".  $start->format('d.m.') ."". $strike_end ." ". $begruendung . "</strong></span>";
               }
             }
           }
-        
-            // ACF-Felder
-            $uhrzeit_von = get_field('uhrzeit_von');
-            $uhrzeit_bis = get_field('uhrzeit_bis');
-            $veranstaltungsarten = get_field('veranstaltungsart');
 
             if (has_post_thumbnail()) {
               $va_thumbnail = get_the_post_thumbnail_url();
@@ -160,9 +212,27 @@
         ?>
 
             <div class="va_tag__card" style="border: solid 5px <?php echo esc_attr($farbe); ?>;">
-              <div class="va_tag__card-thumbnail" style="background-image: url('<?php echo esc_url($va_thumbnail); ?>');">
-                <a href="<?php echo esc_url(get_permalink()); ?>" style="display:block;height:100%;width:100%;"></a>
-              </div>
+              
+                <?php                
+                  if (isset($va_thumbnail)){
+                    if ($va_thumbnail) {
+                    ?>
+                    <div class="va_tag__card-thumbnail" style="background-image: url('<?php echo esc_url($va_thumbnail); ?>'); <?php echo $black_white; ?>">
+                      <a href="<?php echo esc_url(get_permalink()); ?>" style="display:block;height:100%;width:100%;"></a>
+                    </div>
+                    <?php
+                    }
+                    else {
+                      ?>
+                      <div class="va_tag__card-thumbnail">
+                        <a href="<?php echo esc_url(get_permalink()); ?>" style="text-align: center;"><h2 style="color:rgb(221, 221, 221);";><?php echo $strike; the_title(); echo $strike_end; ?></h2></a>
+                      </div>
+                      <?php
+                    }
+                  }
+                ?>
+                
+              
               <div class="va_tag__card-heading"><?php the_title(); ?></div>
                   <div class="va_tag__card-meta">
                     <p class="va_tag__card-location">
@@ -173,15 +243,15 @@
                       <span class="dashicons dashicons-clock"></span>
                       <?php echo esc_html($uhrzeit_von); ?> bis <?php echo esc_html($uhrzeit_bis); ?> Uhr | <?php echo $mode_message; ?>
                     </p>
-                    <?php if ($veranstaltungsarten) { ?>
-                      <p class="va_tag__card-tags">
+                    <?php // if ($veranstaltungsarten) { ?>
+                      <!--<p class="va_tag__card-tags">
                         <?php
-                        foreach ($veranstaltungsarten as $veranstaltungsart) {
-                          echo '<span>' . esc_html($veranstaltungsart->name) . '</span>';
-                        }
+                        // foreach ($veranstaltungsarten as $veranstaltungsart) {
+                          // echo '<span>' . esc_html($veranstaltungsart->name) . '</span>';
+                        // }
                         ?>
-                      </p>
-                    <?php } ?>
+                      </p>-->
+                    <?php // } ?>
                   </div>
               <!-- The VA Content -->
               <div class="va-tag__content">
@@ -205,11 +275,12 @@
             <div class="spacer-40"></div>
 
         <?php
+            $va_thumbnail = "";
           endwhile;
           wp_reset_postdata();
         else :
         ?>
-          <p>Keine Veranstaltungen gefunden.</p>
+          <p>Heute findet leider keine Veranstaltung statt..</p>
         <?php endif; ?>
       </div><!-- End .va_tag__container -->
     </div><!-- End .text -->
