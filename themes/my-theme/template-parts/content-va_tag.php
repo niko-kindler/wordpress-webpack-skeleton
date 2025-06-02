@@ -106,9 +106,14 @@
           $va_tag = get_field('wochentag');
           
           $start_date = get_field('erstes_va_datum');
-          
+          $uhrzeit_bis = get_field('uhrzeit_bis');
+  
           if ($start_date && $modus) {
-            $start = new DateTime($start_date);
+            if (!$uhrzeit_bis) {
+              $uhrzeit_bis = '23:59';  // Fallback, wenn keine Uhrzeit vorhanden
+            }
+
+            $start = new DateTime($start_date . ' ' . $uhrzeit_bis);
             $today = new DateTime();
           
             if ($modus == 'once') {
@@ -280,7 +285,7 @@
           wp_reset_postdata();
         else :
         ?>
-          <p>Heute findet leider keine Veranstaltung statt..</p>
+          <p><?php echo get_field('text_fur_keine_veranstaltungen',55); ?></p>
         <?php endif; ?>
       </div><!-- End .va_tag__container -->
     </div><!-- End .text -->

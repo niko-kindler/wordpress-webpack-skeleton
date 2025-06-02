@@ -25,7 +25,7 @@ if($image) {
 
 <div class="container">
   <div class="text">
-    <p>Willkommen im <?php echo get_bloginfo('name'); ?>. Mehr über uns findest du <a href="#infos">hier</a>. Hier findest du die Veranstaltungen, die heute stattfinden:</p>
+    <?php echo get_field('introtext'); ?>
   </div>
 </div>
 

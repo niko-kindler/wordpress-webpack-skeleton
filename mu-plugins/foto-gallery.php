@@ -6,10 +6,11 @@ Version: 1.0
 */
 
 function gallery_style() {
-	  wp_enqueue_style( 'foto-gallery', '/wp-content/mu-plugins/css/foto-gallery.css');
-    wp_enqueue_script( 'foto-gallery', '/wp-content/mu-plugins/js/foto-gallery.js');
-  }
-  
+    if (is_admin()) return;
+
+    wp_enqueue_style( 'foto-gallery', '/wp-content/mu-plugins/css/foto-gallery.css' );
+    wp_enqueue_script( 'foto-gallery', '/wp-content/mu-plugins/js/foto-gallery.js' );
+}
 add_action( 'wp_enqueue_scripts', 'gallery_style' );
 
 function bildergalerie_shortcode($atts) {

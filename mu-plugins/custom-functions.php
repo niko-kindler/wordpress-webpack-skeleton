@@ -11,7 +11,11 @@ function my_scripts() {
 	wp_enqueue_style( 'dashicons' ); 
   }
   
-add_action( 'wp_enqueue_scripts', 'my_scripts' );
+add_action('wp_enqueue_scripts', 'my_scripts_if_not_admin');
+function my_scripts_if_not_admin() {
+    if (is_admin()) return;
+    my_scripts();
+}
 
 add_filter('the_content', 'do_shortcode');
 

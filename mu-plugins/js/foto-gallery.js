@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.appendChild(expandedImgContainer);
 
     let galleryItems = document.querySelectorAll('.image-gallery li');
+    if (galleryItems.length === 0) return; 
     galleryItems.forEach(item => {
         function expandImage() {
             let imageSrc = item.querySelector('img').src;
