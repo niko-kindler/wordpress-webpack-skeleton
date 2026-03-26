@@ -3,7 +3,8 @@
 <footer>
 <div class="container">
   <div class="footer-primary">
-      <p class="footer-headline">Kidz e.V.</p>
+      <p class="footer-headline">Kidz Präventiv gGmbH</p>
+      <p class="footer-text">Familienzentrum Villa Lützow</p>
       <p class="footer-text"><span class="dashicons dashicons-location"></span><a href="https://maps.app.goo.gl/SG7f5PQprzKpDjQ17">Lützowstr. 28, 10785 Berlin</a><br />
       <span class="dashicons dashicons-email"></span><a href="mailto:kidz@familienzentrum-villaluetzow.de">kidz@familienzentrum-villaluetzow.de</a><br />
       <span class="dashicons dashicons-phone"></span><a href="tel:+43025733816">030-25733816</a>
@@ -11,7 +12,7 @@
     </div>
 
 <div class="footer-secondary">
-    <p class="footer-headline">&nbsp;</p>
+    <p class="footer-headline"><img src="<?php echo get_theme_file_uri('src/images/Logo2.png'); ?>" style="max-width: 50%;"></p>
 <nav class="footer-menu">    
       <?php
         wp_nav_menu([
@@ -27,7 +28,7 @@
 
 <div class="container">
   <div class="footer-tertiary">
-        <p class="footer-bottom">&copy; Kidz e.V. <?php echo date("Y"); ?> </p>
+        <p class="footer-bottom">&copy; Kidz Präventiv gGmbH <?php echo date("Y"); ?> </p>
   </div> 
 </div>
 

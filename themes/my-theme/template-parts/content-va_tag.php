@@ -101,7 +101,8 @@
           }
           
           // Wenn nicht jede Woche, zeige Rhythmus und nächste Daten:
-          $modus = get_field('modus')[0];
+          $modus = get_field('modus'); // Achtung: Manchmal gibt ACF ein Array, manchmal String zurück.
+          if(is_array($modus)) { $modus = $modus[0]; } // Sicherheitshalber
 
           $va_tag = get_field('wochentag');
           
@@ -110,12 +111,15 @@
   
           if ($start_date && $modus) {
             if (!$uhrzeit_bis) {
-              $uhrzeit_bis = '23:59';  // Fallback, wenn keine Uhrzeit vorhanden
+              $uhrzeit_bis = '23:59'; 
             }
 
             $start = new DateTime($start_date . ' ' . $uhrzeit_bis);
             $today = new DateTime();
-          
+            
+            // Hilfsvariablen für Wochentag-Berechnung
+            $wochentag_engl = $start->format('l'); // z.B. "Friday"
+            
             if ($modus == 'once') {
               if ($start < $today) {
                 $mode_message = "Einmalig, Termin am " . $start->format('d.m.') . " (bereits vorbei)";
@@ -123,29 +127,50 @@
                 $mode_message = "Einmalig, Termin am " . $start->format('d.m.');
               }
             } else {
+              $interval = null; // Standardmäßig null setzen
+
               switch ($modus) {
                 case 'weekly':
                   $interval = new DateInterval('P1W');
                   $text = "wöchentlich";
                   break;
+                  
                 case 'biweekly':
                   $interval = new DateInterval('P2W');
                   $text = "alle zwei Wochen";
                   break;
+                  
                 case 'monthly':
-                  $interval = new DateInterval('P1M');
                   $text = "monatlich";
+                  
+                  // FIX: "n-ter Wochentag" statt stur "+1 Monat"
+                  $tag_im_monat = $start->format('j');
+                  $wievielter = ceil($tag_im_monat / 7); 
+                  $map = [1 => 'first', 2 => 'second', 3 => 'third', 4 => 'fourth', 5 => 'fifth'];
+                  $pos = $map[$wievielter] ?? 'first'; // z.B. "first" oder "second"
+                  
+                  // Solange Startdatum in der Vergangenheit, springe zum nächsten korrekten Wochentag
+                  while ($start < $today) {
+                      $start->modify("first day of next month"); // Erst in den nächsten Monat springen
+                      $start->modify("$pos $wochentag_engl of this month"); // Dann den korrekten Tag suchen
+                  }
+                  
+                  $mode_message = "<span class=\"va_tag__content-next\">" . $text . ", nächster Termin am <strong>" . $strike ."". $va_tag ." ".  $start->format('d.m.') ."". $strike_end ." ". $begruendung . "</strong></span>";
                   break;
+                  
                 case '24':
                   $text = "jeden 2. und 4. Donnerstag im Monat";
                   
-                  function getNthThursday($year, $month, $nth) {
-                      $date = new DateTime("first day of $year-$month");
-                      while ($date->format('w') != 4) { // 4 = Donnerstag
-                          $date->modify('+1 day');
+                  // Deine Funktion für Donnerstage (unverändert, da sie funktioniert)
+                  if (!function_exists('getNthThursday')) {
+                      function getNthThursday($year, $month, $nth) {
+                          $date = new DateTime("first day of $year-$month");
+                          while ($date->format('w') != 4) { 
+                              $date->modify('+1 day');
+                          }
+                          $date->modify('+' . (($nth - 1) * 7) . ' days');
+                          return $date;
                       }
-                      $date->modify('+' . (($nth - 1) * 7) . ' days');
-                      return $date;
                   }
               
                   $current_month = (int) $today->format('m');
@@ -154,19 +179,23 @@
                   $second_thursday = getNthThursday($current_year, $current_month, 2);
                   $fourth_thursday = getNthThursday($current_year, $current_month, 4);
               
+                  // Logik um 23:59 Uhrzeit für den Vergleich zu setzen, damit "heute" noch zählt
+                  $second_thursday->setTime(23, 59);
+                  $fourth_thursday->setTime(23, 59);
+
                   if ($second_thursday >= $today) {
                       $next_date = $second_thursday;
                   } elseif ($fourth_thursday >= $today) {
                       $next_date = $fourth_thursday;
                   } else {
-                      // Falls beide Termine vorbei sind, nimm den 2. Donnerstag im nächsten Monat
                       $next_month = ($current_month == 12) ? 1 : $current_month + 1;
                       $next_year = ($current_month == 12) ? $current_year + 1 : $current_year;
                       $next_date = getNthThursday($next_year, $next_month, 2);
                   }
-                  $interval = false;
+                  
                   $mode_message = "<span class=\"va_tag__content-next\">" . $text . ", nächster Termin am <strong>" . $strike ."". $va_tag ." ".  $next_date->format('d.m.') ."". $strike_end ." ". $begruendung . "</strong></span>";
                   break;
+                  
                   case 'interval':
                     $text = "nur von Oktober bis März";
                 
@@ -174,29 +203,35 @@
                     $current_year = (int) $today->format('Y');
                 
                     if ($current_month >= 10 || $current_month <= 3) {
-                        // Aktuell in der erlaubten Zeitspanne, nächster Termin ist das ursprüngliche Startdatum
-                        $next_date = $start;
+                        // Wir sind in der Saison.
+                        // Prüfen, ob das Original-Startdatum schon passt oder wir loopen müssen
+                        $next_date = clone $start; 
                         
-                        // Falls das Startdatum bereits vergangen ist, einfach eine Woche weiter rechnen
+                        // Hier wird angenommen, dass es IN der Saison wöchentlich ist (P1W)
                         while ($next_date < $today) {
-                            $next_date->add(new DateInterval('P1W')); // Falls es ein wöchentliches Event ist, hier anpassen
+                            $next_date->add(new DateInterval('P1W')); 
                         }
                     } else {
-                        // Suche den nächsten Oktober als Startpunkt
-                        $next_year = ($current_month >= 4) ? $current_year + 1 : $current_year;
-                        $next_date = new DateTime("first day of October $next_year");
+                        // Außerhalb der Saison: Suche den Start im nächsten Oktober
+                        $next_year = ($current_month >= 4) ? $current_year : $current_year + 1; // Wenn wir z.B. im August 2025 sind, ist Start Okt 2025.
+                        
+                        // FIX: Nicht "first day of", sondern "first [Wochentag] of"
+                        // Wir suchen den ersten passenden Wochentag im Oktober
+                        $next_date = new DateTime("first $wochentag_engl of October $next_year");
+                        $next_date->setTime(23, 59);
                     }
                 
                     $mode_message = "<span class=\"va_tag__content-next\">" . $text . ", nächster Termin am <strong>" . $strike ."". $va_tag ." ". $next_date->format('d.m.') ."". $strike_end ." ". $begruendung . "</strong></span>";
                 break;
+                
                 default:
                   $interval = null;
                   $text = "";
                   break;
               }
           
+              // Standard-Loop für Weekly/Biweekly (Monthly und Interval haben eigene Logik und setzen $interval auf null)
               if ($interval) {
-                // Falls das Startdatum bereits in der Vergangenheit liegt, finde den nächsten Termin
                 while ($start < $today) {
                   $start->add($interval);
                 }

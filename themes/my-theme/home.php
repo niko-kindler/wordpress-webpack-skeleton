@@ -4,7 +4,7 @@ get_header();
 
 ?>
 
-<h1>Neugikeiten</h1>
+<h1>Neuigkeiten</h1>
 
 <?php
 
@@ -38,7 +38,7 @@ while (have_posts()) {
 <div class="container">
     <div class="text news">
       <h3><?php the_title(); ?></h3>
-      <p><?php the_time('d.m.Y'); ?> - <?php the_author(); ?></p>
+      <p><?php the_time('d.m.Y'); ?></p>
       <p><?php echo $weitereBeiträge_content; ?></p>
       <p><a class="btn"  href="<?php echo the_permalink(); ?>">Artikel lesen</a></p>
     </div>
